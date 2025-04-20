@@ -4,7 +4,7 @@
 
 Originally developed by me and my friends. You can view the original repository [here](https://github.com/gabrieldadcarvalho/BrainScanNet).
 
-![Model Architecture](https://raw.githubusercontent.com/gabrieldadcarvalho/BrainScanNet/refs/heads/main/plots/brainscannet_structure.png)
+![Model Architecture](https://raw.githubusercontent.com/gabrieldadcarvalho/BrainScanNet/refs/heads/main/plots/brainscannet_structure.jpg)
 
 ---
 
