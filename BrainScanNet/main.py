@@ -12,7 +12,7 @@ import torch
 app = Flask(__name__)
 load_dotenv()
 
-WHATSAPP_URL = f"https://graph.facebook.com/v17.0/{os.getenv('ID_NUMBER')}/messages"
+WHATSAPP_URL = f"https://graph.facebook.com/v22.0/{os.getenv('ID_NUMBER')}/messages"
 HEADERS = {
     "Authorization": f"Bearer {os.getenv('API_FACEBOOK')}",
     "Content-Type": "application/json",
@@ -20,7 +20,6 @@ HEADERS = {
 
 AUTHORIZED_NUMBER = os.getenv("AUTHORIZED_NUMBER")
 processed_messages = set()
-classes = ["Tumor Glioma", "Tumor Meningioma", "Sem tumor", "Tumor Pituitária"]
 
 
 def extract_image_id(payload):
@@ -41,7 +40,7 @@ def extract_image_id(payload):
 
 def download_whatsapp_image(media_id):
     # Passo 1: Obter o URL da mídia
-    media_url = f"https://graph.facebook.com/v17.0/{media_id}"
+    media_url = f"https://graph.facebook.com/v22.0/{media_id}"
     params = {"access_token": os.getenv("API_FACEBOOK")}
     response = requests.get(media_url, params=params)
     if response.status_code != 200:
@@ -112,6 +111,12 @@ def whatsapp_bot():
                 model.eval()
                 output = model(image_tensor)
                 prediction = torch.argmax(output, dim=1).item()
+                classes = [
+                    "Tumor Glioma",
+                    "Tumor Meningioma",
+                    "Sem tumor",
+                    "Tumor Pituitária",
+                ]
                 send_whatsapp_message(
                     from_number,
                     f"📊 Resultado da análise: *{classes[prediction]}*",
