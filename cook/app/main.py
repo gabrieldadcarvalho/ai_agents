@@ -11,7 +11,7 @@ load_dotenv()
 app = Flask(__name__)
 recipe_agent = RecipeAgent()
 
-WHATSAPP_URL = f"https://graph.facebook.com/v17.0/{os.getenv('ID_NUMBER')}/messages"
+WHATSAPP_URL = f"https://graph.facebook.com/v22.0/{os.getenv('ID_NUMBER')}/messages"
 HEADERS = {
     "Authorization": f"Bearer {os.getenv('API_FACEBOOK')}",
     "Content-Type": "application/json",
@@ -53,7 +53,7 @@ def send_whatsapp_message(to, text):
 
 
 @app.route("/webhook", methods=["POST"])
-def whatsapp_bot():
+async def whatsapp_bot():
     incoming = request.get_json()
     print("Recebido:", incoming)
 
@@ -83,7 +83,8 @@ def whatsapp_bot():
     )
 
     try:
-        resposta = asyncio.run(recipe_agent.process_message(msg_text))
+        # Utiliza o método assíncrono do RecipeAgent diretamente
+        resposta = await recipe_agent.process_message(msg_text)
         print("Resposta do agente:", resposta)
         send_whatsapp_message(from_number, resposta)
     except Exception as e:
