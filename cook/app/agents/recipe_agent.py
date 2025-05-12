@@ -30,7 +30,7 @@ class RecipeAgent:
             verbose=True,
         )
 
-    async def process_message(self, message: str) -> str:
+    async def process_message(self, message: str) -> str:        
         """Process the incoming message and generate recipe suggestions."""
         task = Task(
             description=f"""*Ingredientes Recebidos:* {message}
